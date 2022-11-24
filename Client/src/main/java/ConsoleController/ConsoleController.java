@@ -32,7 +32,7 @@ public class ConsoleController {
         while(scanner.hasNextLine()) {
             String msg = scanner.nextLine();
             net.sendCommand(new CommandMessage(DELETE_FILE, Path.of("1.txt")));
-            System.out.println("Got");
+            System.out.println(msg);
         }
     }
 }
