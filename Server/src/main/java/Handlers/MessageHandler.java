@@ -38,10 +38,25 @@ public class MessageHandler extends SimpleChannelInboundHandler<AbstractMessage>
     }
 
     private void processCommandMessage(ChannelHandlerContext ctx, AbstractMessage msg) {
-        CommandMessage cmsg = (CommandMessage) msg;
-        Command command = cmsg.getCommand();
+        CommandMessage cms = (CommandMessage) msg;
+        Command command = cms.getCommand();
         switch (command) {
-            case DELETE_FILE -> deleteFile(ctx, cmsg.getPath());
+            case DELETE_FILE -> deleteFile(ctx, cms.getPath());
+            case CREATE_DIRECTORY -> createDir(ctx, cms.getPath());
+            case RENAME_DIRECTORY -> renameDir(ctx, cms.getPath(), cms.getNewPath());
+        }
+    }
+
+    private void renameDir(ChannelHandlerContext ctx, Path path, Path newPath) {
+        //TODO
+    }
+
+    private void createDir(ChannelHandlerContext ctx, Path path) {
+        Path dir = path;
+        try {
+            Files.createDirectory(path);
+        } catch (IOException e) {
+            log.error("Mkdir error. {}", e);
         }
     }
 
